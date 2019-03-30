@@ -2,6 +2,8 @@ import aiohttp
 import pyautogui
 from aiohttp import web
 
+pyautogui.PAUSE = 0
+
 
 async def websocket_handler(request):
 
@@ -11,7 +13,7 @@ async def websocket_handler(request):
     async for msg in ws:
         if msg.type == aiohttp.WSMsgType.TEXT:
             x, y = msg.data.split('x')
-            pyautogui.moveTo(int(x), int(y), 0.1, pyautogui.easeInQuad)
+            pyautogui.moveTo((round(float(x), 0)), round(float(y), 0), 0)
 
         elif msg.type == aiohttp.WSMsgType.ERROR:
             print('ws connection closed with exception %s' %
