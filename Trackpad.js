@@ -55,8 +55,7 @@ class Trackpad extends Component {
         // The user has released all touches while this view is the
         // responder. This typically means a gesture has succeeded
           this.setState({'color': 'steelblue'});
-          let msg = evt.nativeEvent.locationX + "x" + evt.nativeEvent.locationY;
-          this.sendMessage(msg);
+          this.sendMessage('letoff');
       },
       onPanResponderTerminate: (evt, gestureState) => {
         // Another component has become the responder, so this gesture
