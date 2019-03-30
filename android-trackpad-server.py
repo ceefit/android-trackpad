@@ -5,7 +5,7 @@ from aiohttp import web
 pyautogui.PAUSE = 0
 
 offset_x = offset_y = None
-scaling_factor = 2
+scaling_factor = 4
 
 
 async def websocket_handler(request):
@@ -20,6 +20,8 @@ async def websocket_handler(request):
         if msg.type == aiohttp.WSMsgType.TEXT:
             if msg.data.startswith('letoff'):
                 offset_x = offset_y = None
+            elif msg.data.startswith('tapped'):
+                pyautogui.click()
             else:
                 x, y = msg.data.split('x')
                 x = round(float(x), 0)
