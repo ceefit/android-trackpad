@@ -2,16 +2,8 @@ import React, {Component} from 'react';
 import {Animated, PanResponder, TouchableOpacity, View} from 'react-native';
 import WS from 'react-native-websocket'
 import dgram from 'dgram';
-
-
-function toByteArray(obj) {
-    let uint = new Uint8Array(obj.length);
-    for (let i = 0, l = obj.length; i < l; i++) {
-        uint[i] = obj.charCodeAt(i);
-    }
-    return new Uint8Array(uint);
-}
-
+let TextEndoder = require('text-encoding');
+let TextDecoder = TextEndoder.TextDecoder;
 
 class Trackpad extends Component {
 
@@ -42,14 +34,45 @@ class Trackpad extends Component {
             'pan': {'x': 0, 'y': 0},
             'color': 'steelblue',
             'ref': null,
+            'serverUrl': null,
         };
 
-        let b = dgram.createSocket('udp4');
-        const msg = toByteArray('ping');
-        console.log("Broadcasting " + msg);
-         b.send(msg, 0, msg.length, 50000, '255.255.255.255', function(err) {
-             if (err) throw err;
-           });
+        console.log("LOADING");
+
+        let socket = dgram.createSocket('udp4');
+
+        socket.on('error', (err) => {
+              console.log(`server error:\n${err.stack}`);
+              socket.close();
+        });
+
+        socket.on('message', (msg, rinfo) => {
+            msg = new TextDecoder('utf-8').decode(msg)
+            console.log(`server got: "${msg}" from ${rinfo.address}:${rinfo.port}`);
+            if (msg.startsWith("Android-Trackpad IP:")) {
+                console.log("Got an IP address reply, connecting");
+                let serverIp = msg.replace("Android-Trackpad IP: ", "");
+                this.setState({'serverUrl': "ws://" + serverIp + ":8080/ws"});
+            } else {
+                console.log("Got an unwanted UDP message. Ignoring it.");
+            }
+        });
+
+        socket.on('listening', () => {
+              const address = socket.address();
+              console.log(`server listening ${address.address}:${address.port}`);
+        });
+
+        socket.bind(50000);
+
+        const msg = new TextEncoder().encode('Android-Trackpad wants to know your IP');
+
+        console.log("Broadcasting " + new TextDecoder("utf-8").decode(msg));
+
+        socket.send(msg, 0, msg.length, 50000, '255.255.255.255', function(err) {
+            if (err) throw err;
+        });
+
 
         this.panResponder = PanResponder.create({
             // Ask to be the responder:
@@ -95,13 +118,16 @@ class Trackpad extends Component {
 
 
     render() {
-        return (
+        return this.state.serverUrl == null ? (
+            <React.Fragment>
+                <View style={{width: "100%", height: "100%", backgroundColor: "red" }}/>
+            </React.Fragment>
+            ) : (
             <React.Fragment>
                 <WS
                     ref={ref => { this.ws = ref }}
-                    url="ws://10.0.0.50:8080/ws"
+                    url={ this.state.serverUrl }
                     onOpen={() => {
-                        console.log('Open!');
                         this.setState({'ref': this.ws});
                     }}
                     onMessage={this.handleMessage}

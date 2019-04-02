@@ -53,10 +53,3 @@ For starting the app:
 
     cd app
     react-native run-android
-
-
-## Caveats
-
-There is no IP auto-detection currently, so you need to manually change
-the IP address the client is using to contact the server. It's in the `url`
-property of the `WS` component of `Trackpad.js` (near the bottom)
