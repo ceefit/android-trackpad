@@ -15,6 +15,10 @@ Requirements:
   * npm
   * expo-cli
 
+Follow the [React native CLI Quickstart](http://facebook.github.io/react-native/docs/getting-started.html)
+steps to get an emulator and react-native-cli. You only need to go as far
+as setting up the `$ANDROID_HOME` environment variable
+
 Update npm and get expo:
 
     sudo npm i npm@latest -g
