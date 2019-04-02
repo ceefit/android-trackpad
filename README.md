@@ -26,11 +26,13 @@ Update npm and get expo:
 
 Create a virtual environment for the server-side and install requirements
 
+    cd server
     virtualenv --python=python3 venv
     pip install -r requirements.txt
 
 Get mobile app dependencies
 
+    cd app
     npm install
 
 If running on a physical mobile device, install expo
@@ -51,13 +53,17 @@ The terminal where the server runs needs to have the virtual environment
 activated once. When you close that terminal and open a new one, you'll
 need to reactivate it with:
 
+For starting the server:
+
+    cd server
     source venv/bin/activate
-
-For starting the services:
-
     python android-trackpad-server.py
-    npm start
 
+
+For starting the app:
+
+    cd app
+    npm start
 
 
 ## Caveats
