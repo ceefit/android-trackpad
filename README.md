@@ -10,11 +10,11 @@ which will drive the mouse.
 All of these steps assume you've `cd`'d into the cloned project directory
 
 Requirements:
-  * python 3.6+
+  * python 3.7
   * virtualenv
   * npm
-  * expo-cli
   * watchman
+  * react-native-cli
 
 Follow the [React native CLI Quickstart](http://facebook.github.io/react-native/docs/getting-started.html)
 steps to get an emulator and react-native-cli. You only need to go as far
@@ -23,7 +23,7 @@ as setting up Watchman.
 Create a virtual environment for the server-side and install requirements
 
     cd server
-    virtualenv --python=python3 venv
+    virtualenv --python=python3.7 venv
     pip install -r requirements.txt
 
 Get mobile app dependencies

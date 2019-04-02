@@ -2,8 +2,8 @@ import aiohttp
 import asyncio
 import pyautogui
 from aiohttp import web
-from server.utils.aioudp import open_local_endpoint, open_remote_endpoint
-from server.utils.get_ip import get_ip
+from utils.aioudp import open_local_endpoint, open_remote_endpoint
+from utils.get_ip import get_ip
 
 pyautogui.PAUSE = 0
 pyautogui.FAILSAFE = False
