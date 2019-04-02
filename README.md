@@ -14,10 +14,11 @@ Requirements:
   * virtualenv
   * npm
   * expo-cli
+  * watchman
 
 Follow the [React native CLI Quickstart](http://facebook.github.io/react-native/docs/getting-started.html)
 steps to get an emulator and react-native-cli. You only need to go as far
-as setting up the `$ANDROID_HOME` environment variable
+as setting up Watchman.
 
 Update npm and get expo:
 

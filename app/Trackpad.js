@@ -1,6 +1,17 @@
 import React, {Component} from 'react';
 import {Animated, PanResponder, TouchableOpacity, View} from 'react-native';
 import WS from 'react-native-websocket'
+import dgram from 'dgram';
+
+
+function toByteArray(obj) {
+    let uint = new Uint8Array(obj.length);
+    for (let i = 0, l = obj.length; i < l; i++) {
+        uint[i] = obj.charCodeAt(i);
+    }
+    return new Uint8Array(uint);
+}
+
 
 class Trackpad extends Component {
 
@@ -33,6 +44,12 @@ class Trackpad extends Component {
             'ref': null,
         };
 
+        let b = dgram.createSocket('udp4');
+        const msg = toByteArray('ping');
+        console.log("Broadcasting " + msg);
+         b.send(msg, 0, msg.length, 50000, '255.255.255.255', function(err) {
+             if (err) throw err;
+           });
 
         this.panResponder = PanResponder.create({
             // Ask to be the responder:

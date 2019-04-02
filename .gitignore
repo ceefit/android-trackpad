@@ -1,7 +1,7 @@
 .idea
 venv
 **/node_modules/**/*
-.expo/*
+**/.expo/*
 npm-debug.*
 *.jks
 *.p12
