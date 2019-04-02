@@ -64,7 +64,7 @@ For starting the server:
 For starting the app:
 
     cd app
-    npm start
+    react-native run-android
 
 
 ## Caveats

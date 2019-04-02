@@ -1,3 +1,4 @@
 aiohttp
 pyautogui
+pytest
 python3-xlib
