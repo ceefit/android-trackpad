@@ -53,3 +53,7 @@ For starting the app:
 
     cd app
     react-native run-android
+
+
+Capturing logs:
+    react-native log-android
