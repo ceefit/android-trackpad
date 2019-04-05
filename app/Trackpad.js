@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Animated, PanResponder, TouchableOpacity, View} from 'react-native';
 import WS from 'react-native-websocket'
 import dgram from 'dgram';
+import { gyroscope } from "react-native-sensors";
+
 let TextEndoder = require('text-encoding');
 let TextDecoder = TextEndoder.TextDecoder;
 
@@ -74,6 +76,12 @@ class Trackpad extends Component {
         });
 
 
+        const subscription = gyroscope.subscribe(({ x, y, z, timestamp }) => {
+            this.sendMessage(-z+'x'+-x);
+        }
+        );
+
+
         this.panResponder = PanResponder.create({
             // Ask to be the responder:
             onStartShouldSetPanResponder: (evt, gestureState) => false,
@@ -94,6 +102,7 @@ class Trackpad extends Component {
                 // The accumulated gesture distance since becoming responder is
                 // gestureState.d{x,y}
                 let msg = gestureState.moveX + "x" + gestureState.moveY;
+                console.log(msg);
                 this.sendMessage(msg);
             },
             onPanResponderTerminationRequest: (evt, gestureState) => true,

@@ -9,6 +9,7 @@
   "dependencies": {
     "react": "16.8.3",
     "react-native": "0.59.3",
+    "react-native-sensors": "^5.1.8",
     "react-native-udp": "^2.5.2",
     "react-native-websocket": "^1.0.2",
     "text-encoding": "^0.7.0"
